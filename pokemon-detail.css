@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400&display=swap');
+
+.detail-container {
+    min-height: 100vh;
+    padding: 20px;
+
+}
+
+.back-button {
+    display: inline-block;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-detail {
+    width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.detail-header {
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    align-items: center;
+}
+
+.detail-header img {
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    padding: 20px;
+    object-fit: contain;
+}
+
+.detail-info {
+    color: white;
+    flex: 1;
+}
+
+.detail-info h1 {
+    font-size: 2.5rem;
+    margin: 0 0 10px 0;
+    text-transform: capitalize;
+}
+
+.detail-info .pokemon-id {
+    font-size: 1.2rem;
+    margin: 0 0 15px 0;
+    opacity: 0.9;
+}
+
+.types-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.type-badge {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 0.9rem;
+}
+
+.detail-body {
+    padding: 40px;
+}
+
+.detail-section {
+    margin-bottom: 40px;
+}
+
+.detail-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.measures {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.measure-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.measure-item .label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.measure-item .value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #667eea;
+}
+
+
+
+.stat-item {
+    display: grid;
+    grid-template-columns: 100px 1fr 50px;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.stat-name {
+    font-weight: bold;
+    color: #333;
+    font-size: 0.85rem;
+}
+
+.stat-bar {
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transition: width 0.3s ease;
+}
+
+.stat-value {
+    font-weight: bold;
+    color: #667eea;
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+#moves-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.abilities-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
+.ability-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 16px;
+    margin-right: 20px;
+    background: #e6e5e5;
+    border-radius: 18px;
+    flex: 0 1 220px;
+    min-width: 160px;
+    max-width: 240px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+    font-family: 'Lato', sans-serif;
+}
+
+
+.ability-badge {
+    font-weight: bold;
+    color: #333;
+    text-transform: capitalize;
+    font-size: 0.95rem;
+}
+
+.ability-info-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: #667eea;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ability-info-button:hover {
+    background: #5b6bd6;
+}
+
+.ability-description {
+    display: none;
+    width: 100%;
+    padding: 12px 14px;
+    background: #eef2ff;
+    border-radius: 14px;
+    color: #333;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    font-family: 'Lato', sans-serif;
+}
+
+.ability-description.visible {
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .detail-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .detail-header img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .detail-info h1 {
+        font-size: 1.8rem;
+    }
+
+    .measures {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-item {
+        grid-template-columns: 80px 1fr 40px;
+    }
+}

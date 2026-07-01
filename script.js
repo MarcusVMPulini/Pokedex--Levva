@@ -63,6 +63,12 @@ const createPokemonCard = (poke) => {
         </div>
     `;
     card.innerHTML = pokemonInnerHTML;
+    
+    card.addEventListener('click', () => {
+        window.location.href = `pokemon-detail.html?id=${poke.id}`;
+    });
+    card.style.cursor = 'pointer';
+    
     pokemonList.appendChild(card);
 }
 

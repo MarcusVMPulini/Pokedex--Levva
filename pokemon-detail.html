@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pokemon-detail.css">
+    <script src="pokemon-detail.js" defer></script>
+    <title>Detalhes do Pokémon</title>
+</head>
+<body>
+    <div class="detail-container">
+        <a href="index.html" class="back-button">← Voltar</a>
+        
+        <div class="pokemon-detail">
+            <div class="detail-header">
+                <img id="pokemon-image" src="" alt="">
+                <div class="detail-info">
+                    <h1 id="pokemon-name"></h1>
+                    <p class="pokemon-id" id="pokemon-id"></p>
+                    <div class="types-container" id="types-container"></div>
+                </div>
+            </div>
+
+            <div class="detail-body">
+                <section class="detail-section">
+                    <h2>Medidas</h2>
+                    <div class="measures">
+                        <div class="measure-item">
+                            <span class="label">Altura</span>
+                            <span class="value" id="height"></span>
+                        </div>
+                        <div class="measure-item">
+                            <span class="label">Peso</span>
+                            <span class="value" id="weight"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="detail-section">
+                    <h2>Estatísticas</h2>
+                    <div id="stats-container"></div>
+                </section>
+
+                <section class="detail-section">
+                    <h2>Habilidades</h2>
+                    <div id="abilities-container" class="abilities-container"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
