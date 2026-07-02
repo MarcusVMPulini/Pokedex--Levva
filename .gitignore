@@ -1,4 +1,9 @@
 # IDE
-.vscode
+.vscode/
+vscode/
 settings.json
+
+# Node.js
+node_modules/
+.env
 

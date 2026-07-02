@@ -10,8 +10,18 @@
 </head>
 <body>
     <div class="detail-container">
-        <a href="index.html" class="back-button">← Voltar</a>
-        
+        <div class="detail-header-top">
+            <a href="index.html" class="back-button">← Voltar</a>
+            <div class="id-carousel">
+                <button id="prev-pokemon" class="carousel-button" type="button">←</button>
+                <span id="current-page" class="carousel-label">#001</span>
+                <button id="next-pokemon" class="carousel-button" type="button">→</button>
+            </div>
+            <div class="search-bar">
+                <input id="pokemon-search" type="text" placeholder="Buscar por nome ou ID">
+            </div>
+        </div>
+
         <div class="pokemon-detail">
             <div class="detail-header">
                 <img id="pokemon-image" src="" alt="">
@@ -50,6 +60,23 @@
         </div>
     </div>
 
+    <div class="chatbot-widget">
+        <button class="chatbot-button" type="button">IA</button>
+        <div class="chatbot-panel">
+            <div class="chatbot-panel-header">
+                <span>Chat IA</span>
+                <button class="chatbot-close" type="button">×</button>
+            </div>
+            <div class="chatbot-messages">
+                <div class="chatbot-message assistant">Clique no botão e pergunte algo sobre o Pokémon atual.</div>
+            </div>
+            <div class="chatbot-status"></div>
+            <div class="chatbot-input-row">
+                <input id="chat-input" type="text" placeholder="Digite sua pergunta...">
+                <button id="chat-send" type="button">Enviar</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

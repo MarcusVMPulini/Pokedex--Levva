@@ -20,13 +20,27 @@ const colors = {
 }
 
 const urlParams = new URLSearchParams(window.location.search);
-const id = urlParams.get('id');
+let currentIdParam = urlParams.get('id') || '1';
+let currentPokemonId = 1;
 
 const getPokemonDetail = async () => {
-    const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    createPokemonDetail(data);
+    try {
+        const url = `https://pokeapi.co/api/v2/pokemon/${currentIdParam.toString().toLowerCase()}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Pokémon não encontrado');
+        }
+        const data = await response.json();
+        currentPokemonId = data.id;
+        createPokemonDetail(data);
+        updateCarousel();
+    } catch (error) {
+        console.error(error);
+        const chatStatus = document.getElementById('chat-status');
+        if (chatStatus) {
+            chatStatus.textContent = 'Pokémon não encontrado. Tente outro nome ou ID.';
+        }
+    }
 }
 
 const createPokemonDetail = (pokemon) => {
@@ -97,8 +111,231 @@ const createPokemonDetail = (pokemon) => {
         });
     });
 
-
-    
+    initChat(pokemon);
 }
+
+const initChat = (pokemon) => {
+    let widget = document.querySelector('.chatbot-widget');
+    let panel;
+    let button;
+    let closeButton;
+    let messages;
+    let status;
+    let input;
+    let sendButton;
+
+    if (!widget) {
+        widget = document.createElement('div');
+        widget.className = 'chatbot-widget';
+
+        button = document.createElement('button');
+        button.className = 'chatbot-button';
+        button.type = 'button';
+        button.textContent = 'IA';
+
+        panel = document.createElement('div');
+        panel.className = 'chatbot-panel';
+
+        const header = document.createElement('div');
+        header.className = 'chatbot-panel-header';
+        header.innerHTML = `<span>Chat IA</span>`;
+
+        closeButton = document.createElement('button');
+        closeButton.className = 'chatbot-close';
+        closeButton.type = 'button';
+        closeButton.textContent = '×';
+        header.appendChild(closeButton);
+
+        messages = document.createElement('div');
+        messages.className = 'chatbot-messages';
+        const welcome = document.createElement('div');
+        welcome.className = 'chatbot-message assistant';
+        welcome.textContent = 'Clique no botão e pergunte algo sobre o Pokémon atual.';
+        messages.appendChild(welcome);
+
+        status = document.createElement('div');
+        status.className = 'chatbot-status';
+
+        const inputRow = document.createElement('div');
+        inputRow.className = 'chatbot-input-row';
+
+        input = document.createElement('input');
+        input.id = 'chat-input';
+        input.type = 'text';
+        input.placeholder = 'Digite sua pergunta...';
+
+        sendButton = document.createElement('button');
+        sendButton.id = 'chat-send';
+        sendButton.type = 'button';
+        sendButton.textContent = 'Enviar';
+
+        inputRow.append(input, sendButton);
+        panel.append(header, messages, status, inputRow);
+        widget.append(button, panel);
+        document.body.appendChild(widget);
+    } else {
+        panel = widget.querySelector('.chatbot-panel');
+        button = widget.querySelector('.chatbot-button');
+        closeButton = widget.querySelector('.chatbot-close');
+        messages = widget.querySelector('.chatbot-messages');
+        status = widget.querySelector('.chatbot-status');
+        input = widget.querySelector('#chat-input');
+        sendButton = widget.querySelector('#chat-send');
+    }
+
+    if (!widget.classList.contains('chatbot-wired')) {
+        widget.classList.add('chatbot-wired');
+
+        const addMessage = (role, text) => {
+            const messageElement = document.createElement('div');
+            messageElement.className = `chatbot-message ${role}`;
+            messageElement.textContent = text;
+            messages.appendChild(messageElement);
+            messages.scrollTop = messages.scrollHeight;
+        };
+
+        const setLoading = (isLoading) => {
+            input.disabled = isLoading;
+            sendButton.disabled = isLoading;
+            status.textContent = isLoading ? 'Enviando para a IA...' : '';
+        };
+
+        const sendMessage = async () => {
+            const question = input.value.trim();
+            if (!question) {
+                return;
+            }
+
+            addMessage('user', question);
+            input.value = '';
+            setLoading(true);
+
+            try {
+                const body = {
+                    model: 'gpt-4o-mini',
+                    messages: [
+                        {
+                            role: 'system',
+                            content: `Você é um assistente especialista em Pokémon. Responda em português e ajude com informações sobre ${pokemon.name}.`
+                        },
+                        {
+                            role: 'user',
+                            content: question
+                        }
+                    ]
+                };
+
+                const response = await fetch('/api/ai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await response.json();
+                const answer = data?.choices?.[0]?.message?.content
+                    || data?.output?.[0]?.content
+                    || data?.reply
+                    || 'Desculpe, não consegui obter uma resposta agora.';
+
+                addMessage('assistant', answer);
+            } catch (error) {
+                console.error('Erro ao enviar pergunta:', error);
+                addMessage('assistant', 'Não foi possível conectar à IA. Tente novamente mais tarde.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const togglePanel = () => {
+            panel.classList.toggle('open');
+            if (panel.classList.contains('open')) {
+                input.focus();
+            }
+        };
+
+        button.addEventListener('click', togglePanel);
+        closeButton.addEventListener('click', togglePanel);
+        sendButton.addEventListener('click', sendMessage);
+        input.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
+};
+
+const navigateToPokemon = (target) => {
+    if (!target) {
+        return;
+    }
+    window.location.href = `pokemon-detail.html?id=${target}`;
+};
+
+const updateCarousel = () => {
+    const currentPage = document.getElementById('current-page');
+    const prevPokemon = document.getElementById('prev-pokemon');
+    const nextPokemon = document.getElementById('next-pokemon');
+
+    if (currentPage) {
+        currentPage.textContent = `#${currentPokemonId.toString().padStart(3, '0')}`;
+    }
+    if (prevPokemon) {
+        prevPokemon.disabled = currentPokemonId <= 1;
+    }
+    if (nextPokemon) {
+        nextPokemon.disabled = currentPokemonId >= 1025;
+    }
+};
+
+const setupHeaderControls = () => {
+    const prevPokemon = document.getElementById('prev-pokemon');
+    const nextPokemon = document.getElementById('next-pokemon');
+    const searchInput = document.getElementById('pokemon-search');
+
+    const searchPokemon = async () => {
+        const query = searchInput?.value.trim();
+        if (!query) {
+            return;
+        }
+
+        if (/^\d+$/.test(query)) {
+            navigateToPokemon(Number(query));
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(query.toLowerCase())}`);
+            if (!response.ok) {
+                throw new Error('Pokémon não encontrado');
+            }
+            const data = await response.json();
+            navigateToPokemon(data.id);
+        } catch (error) {
+            console.error(error);
+            const status = document.getElementById('chat-status');
+            if (status) {
+                status.textContent = 'Pokémon não encontrado. Tente outro nome ou ID.';
+            }
+        }
+    };
+
+    if (prevPokemon) {
+        prevPokemon.addEventListener('click', () => navigateToPokemon(currentPokemonId - 1));
+    }
+    if (nextPokemon) {
+        nextPokemon.addEventListener('click', () => navigateToPokemon(currentPokemonId + 1));
+    }
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                searchPokemon();
+            }
+        });
+    }
+};
+
+setupHeaderControls();
 
 getPokemonDetail();
