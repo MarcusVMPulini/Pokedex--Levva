@@ -212,11 +212,11 @@ const initChat = (pokemon) => {
 
             try {
                 const body = {
-                    model: 'gpt-4o-mini',
+                    model: 'poolside/laguna-xs-2.1:free',
                     messages: [
                         {
                             role: 'system',
-                            content: `Você é um assistente especialista em Pokémon. Responda em português e ajude com informações sobre ${pokemon.name}.`
+                            content: `Você é um assistente especialista em Pokémon. Responda estritamente usando apenas informações da PokeAPI. Foque no Pokémon atual (${pokemon.name}) quando possível, e evite inventar dados ou responder sobre outros assuntos. Se a pergunta não for sobre Pokémon, diga que você só responde dúvidas sobre Pokémon usando informações da PokeAPI.`
                         },
                         {
                             role: 'user',
