@@ -5,10 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <script src="src/script.js" defer></script>
-    <title>Pokedex-Levve-Project</title>
+    <link rel="icon" type="image/gif" href="/img/Pokeball loading animation.gif">
+    <title> Pokedex-Levva</title>
 </head>
 <body>
-    <h1>Pokedex</h1>
-    <div class="pokemon-list"></div>
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="brand">
+                <h1 class="header-title">Pokedex-Levva</h1>
+            </div>
+
+            <div class="search-bar" role="search">
+                <input id="pokemon-search" type="text" placeholder="Buscar por nome ou ID" aria-label="Buscar Pokémon" />
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <div class="panel">
+            <div class="pokemon-list" aria-live="polite"></div>
+        </div>
+    </main>
 </body>
 </html>

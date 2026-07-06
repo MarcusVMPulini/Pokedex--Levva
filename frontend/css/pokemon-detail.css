@@ -1,9 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400&display=swap');
 
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: -40px;
+    left: -60px;
+    width: 320px;
+    height: 320px;
+    background: url('../img/pokeball-background.png') center/contain no-repeat;
+    opacity: 0.16;
+    pointer-events: none;
+    z-index: 0;
+    transform: rotate(-18deg);
+}
+
 .detail-container {
     min-height: 100vh;
     padding: 20px;
-
+    position: relative;
+    z-index: 1;
 }
 
 .back-button {
