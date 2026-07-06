@@ -58,7 +58,7 @@ Abra:
 ```
 
 **Retorno:** resposta repassada do provider (OpenRouter). Caso o modelo falhe (indisponível/limite), o servidor tenta modelos gratuitos em fallback.
-
+ 
 ---
 
 ## Melhorias de performance (implementadas)
