@@ -1,4 +1,5 @@
-# Pokedex-Levve
+# Pokedex-Levva
+
 
 Aplicação web tipo **Pokedex** que consulta a **PokeAPI** para listar e exibir detalhes dos pokémons, e usa uma API de IA (OpenRouter) para responder perguntas sobre o **Pokémon exibido no detalhe**.
 
